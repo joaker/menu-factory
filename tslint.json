@@ -1,0 +1,22 @@
+{
+  "defaultSeverity": "error",
+  "extends": ["tslint:recommended"],
+  "jsRules": {},
+  "rules": {
+    "array-element-newline": ["warning", "always"],
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "always",
+        "singleline": "never",
+        "esSpecCompliant": true
+      }
+    ],
+    "interface-name": [false],
+    "no-console": [false],
+    "quotemark": [true, "single"],
+    "no-any": true,
+    "no-null-keyword": true
+  },
+  "rulesDirectory": []
+}
