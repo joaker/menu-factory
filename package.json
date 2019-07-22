@@ -12,7 +12,7 @@
     "build": "npm-run-all clean lint tsc copy-assets",
     "dev:start": "npm-run-all build start",
     "dev": "tsc-watch --onSuccess \"node ./dist/server.js\"",
-    "start": "node .",
+    "start": "node ./dist/server.js",
     "initdb": "ts-node tools/initdb",
     "test": "jest --coverage"
   },
