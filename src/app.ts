@@ -32,13 +32,13 @@ app.use((req, res, next) => {
 const entities = ["menus", "recipes", "ingredients"];
 
 entities.forEach((entity: string) => {
-  app.get(`/${entity}`, (req, res) => {
+  app.get(`/api/${entity}`, (req, res) => {
     const records = db.get(entity).value();
     res.send({ [entity]: records });
   });
 });
 
-app.post("/menus", (req, res) => {
+app.post("/api/menus", (req, res) => {
   const { name, recipes, description } = req.body.menu;
 
   try {
@@ -53,7 +53,7 @@ app.post("/menus", (req, res) => {
   }
 });
 
-app.delete("/menus/:id", (req, res) => {
+app.delete("/api/menus/:id", (req, res) => {
   try {
     const { id: deleteId } = req.params;
     db.get("menus")
@@ -66,7 +66,7 @@ app.delete("/menus/:id", (req, res) => {
   }
 });
 
-app.post("/ingredients", (req, res) => {
+app.post("/api/ingredients", (req, res) => {
   const { name, description } = req.body.ingredient;
 
   try {
@@ -90,7 +90,7 @@ app.post("/ingredients", (req, res) => {
   }
 });
 
-app.delete("/ingredients/:id", (req, res) => {
+app.delete("/api/ingredients/:id", (req, res) => {
   try {
     const { id: deleteId } = req.params;
     db.get("ingredients")
@@ -103,7 +103,7 @@ app.delete("/ingredients/:id", (req, res) => {
   }
 });
 
-app.post("/recipes", (req, res) => {
+app.post("/api/recipes", (req, res) => {
   const { name, ingredients, description } = req.body.recipe;
 
   try {
@@ -128,7 +128,7 @@ app.post("/recipes", (req, res) => {
   }
 });
 
-app.delete("/recipes/:id", (req, res) => {
+app.delete("/api/recipes/:id", (req, res) => {
   try {
     const { id: deleteId } = req.params;
     db.get("recipes")

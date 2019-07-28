@@ -6,11 +6,11 @@ const path = require("path");
 
 const app = require("./app");
 
-describe("/recipes", () => {
+describe("/api/recipes", () => {
   describe("GET", () => {
     it("should return a list of recipes", done => {
       request(app)
-        .get("/recipes")
+        .get("/api/recipes")
         .then((response: any) => {
           expect(response.body.recipes).toEqual([]);
           done();
@@ -19,7 +19,7 @@ describe("/recipes", () => {
   });
 });
 
-describe("/recipes", () => {
+describe("/api/recipes", () => {
   afterEach(() => {
     const dbPath = path.join(__dirname, "../test.json");
     if (fs.existsSync(dbPath)) fs.unlinkSync(dbPath);
@@ -47,14 +47,14 @@ describe("/recipes", () => {
   describe("DELETE", () => {
     it("should delete recipes", done => {
       request(app)
-        .post("/recipes")
+        .post("/api/recipes")
         .set("Content-Type", "application/json")
         .set("Accept", "application/json")
         .send(goodRecipe)
         .then((response: any) => {
           const { id } = response.body;
           request(app)
-            .delete(`/recipes/${id}`)
+            .delete(`/api/recipes/${id}`)
             .then((response: any) => {
               expect(response.status).toBe(200);
               done();
@@ -66,7 +66,7 @@ describe("/recipes", () => {
   describe("POST", () => {
     it("should persist a valid recipe and return its id", done => {
       request(app)
-        .post("/recipes")
+        .post("/api/recipes")
         .set("Content-Type", "application/json")
         .set("Accept", "application/json")
         .send(goodRecipe)
@@ -82,7 +82,7 @@ describe("/recipes", () => {
 
     it("should respond with an error for an invalid recipe", done => {
       request(app)
-        .post("/recipes")
+        .post("/api/recipes")
         .set("Content-Type", "application/json")
         .set("Accept", "application/json")
         .send(badRecipe)
@@ -96,13 +96,13 @@ describe("/recipes", () => {
   describe("GET", () => {
     it("should return a list of ingredients", done => {
       request(app)
-        .post("/recipes")
+        .post("/api/recipes")
         .set("Content-Type", "application/json")
         .set("Accept", "application/json")
         .send(goodRecipe)
         .then(() => {
           request(app)
-            .get("/recipes")
+            .get("/api/recipes")
             .then((response: any) => {
               expect(response.body.recipes[0].name).toEqual(
                 goodRecipe.recipe.name
@@ -114,7 +114,7 @@ describe("/recipes", () => {
   });
 });
 
-describe("/ingredients", () => {
+describe("/api/ingredients", () => {
   afterEach(() => {
     const dbPath = path.join(__dirname, "../test.json");
     if (fs.existsSync(dbPath)) fs.unlinkSync(dbPath);
@@ -134,14 +134,14 @@ describe("/ingredients", () => {
   describe("DELETE", () => {
     it("should delete ingredients", done => {
       request(app)
-        .post("/ingredients")
+        .post("/api/ingredients")
         .set("Content-Type", "application/json")
         .set("Accept", "application/json")
         .send(goodIngredient)
         .then((response: any) => {
           const { id } = response.body;
           request(app)
-            .delete(`/ingredients/${id}`)
+            .delete(`/api/ingredients/${id}`)
             .then((response: any) => {
               expect(response.status).toBe(200);
               done();
@@ -153,7 +153,7 @@ describe("/ingredients", () => {
   describe("POST", () => {
     it("should persist a valid ingredient and return its id", done => {
       request(app)
-        .post("/ingredients")
+        .post("/api/ingredients")
         .set("Content-Type", "application/json")
         .set("Accept", "application/json")
         .send(goodIngredient)
@@ -171,7 +171,7 @@ describe("/ingredients", () => {
 
     it("should respond with an error for an invalid ingredient", done => {
       request(app)
-        .post("/ingredients")
+        .post("/api/ingredients")
         .set("Content-Type", "application/json")
         .set("Accept", "application/json")
         .send(badIngredient)
@@ -185,13 +185,13 @@ describe("/ingredients", () => {
   describe("GET", () => {
     it("should return a list of ingredients", done => {
       request(app)
-        .post("/ingredients")
+        .post("/api/ingredients")
         .set("Content-Type", "application/json")
         .set("Accept", "application/json")
         .send(goodIngredient)
         .then(() => {
           request(app)
-            .get("/ingredients")
+            .get("/api/ingredients")
             .then((response: any) => {
               expect(response.body.ingredients[0].name).toEqual(
                 goodIngredient.ingredient.name
@@ -203,7 +203,7 @@ describe("/ingredients", () => {
   });
 });
 
-describe("/menu", () => {
+describe("/api/menu", () => {
   afterEach(() => {
     const dbPath = path.join(__dirname, "../test.json");
     if (fs.existsSync(dbPath)) fs.unlinkSync(dbPath);
@@ -223,14 +223,14 @@ describe("/menu", () => {
   describe("DELETE", () => {
     it("should delete menus", done => {
       request(app)
-        .post("/menus")
+        .post("/api/menus")
         .set("Content-Type", "application/json")
         .set("Accept", "application/json")
         .send(goodOrder)
         .then((response: any) => {
           const { id } = response.body;
           request(app)
-            .delete(`/menus/${id}`)
+            .delete(`/api/menus/${id}`)
             .then((response: any) => {
               expect(response.status).toBe(200);
               done();
@@ -242,7 +242,7 @@ describe("/menu", () => {
   describe("POST", () => {
     it("should persist a valid menu and return its id", done => {
       request(app)
-        .post("/menus")
+        .post("/api/menus")
         .set("Content-Type", "application/json")
         .set("Accept", "application/json")
         .send(goodOrder)
@@ -258,7 +258,7 @@ describe("/menu", () => {
 
     it("should respond with an error for an invalid menu", done => {
       request(app)
-        .post("/menus")
+        .post("/api/menus")
         .set("Content-Type", "application/json")
         .set("Accept", "application/json")
         .send(badOrder)
@@ -272,13 +272,13 @@ describe("/menu", () => {
   describe("GET", () => {
     it("should return a list of menus", done => {
       request(app)
-        .post("/menus")
+        .post("/api/menus")
         .set("Content-Type", "application/json")
         .set("Accept", "application/json")
         .send(goodOrder)
         .then(() => {
           request(app)
-            .get("/menus")
+            .get("/api/menus")
             .then((response: any) => {
               expect(response.body.menus[0].recipes).toEqual(
                 goodOrder.menu.recipes
