@@ -1,5 +1,5 @@
-import Recipe from "Recipe";
-import uniqid from "uniqid";
+import Recipe from 'Recipe';
+import uniqid from 'uniqid';
 
 export default class Menu {
   public recipes: Recipe[];
@@ -14,13 +14,13 @@ export default class Menu {
     this.description = description;
 
     if (!Array.isArray(recipes)) {
-      throw new Error("recipes must be an array");
+      throw new Error('recipes must be an array');
     }
     if (!recipes) {
-      throw new Error("recipes must be defined");
+      throw new Error('recipes must be defined');
     }
     if (!name) {
-      throw new Error("name must be defined");
+      throw new Error('name must be defined');
     }
   }
 }

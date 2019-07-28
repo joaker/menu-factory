@@ -1,14 +1,14 @@
-import express from "express";
-import low from "lowdb";
-import FileSync from "lowdb/adapters/FileSync";
-import uniqid from "uniqid";
+import express from 'express';
+import low from 'lowdb';
+import FileSync from 'lowdb/adapters/FileSync';
+import uniqid from 'uniqid';
 
-import Menu from "./types/Menu";
-import Ingredient from "./types/Ingredient";
-import Recipe from "./types/Recipe";
+import Ingredient from './types/Ingredient';
+import Menu from './types/Menu';
+import Recipe from './types/Recipe';
 
 const adapter = new FileSync(
-  process.env.NODE_ENV === "test" ? "test.json" : "db.json"
+  process.env.NODE_ENV === 'test' ? 'test.json' : 'db.json',
 );
 const db = low(adapter);
 const app = express();
@@ -17,19 +17,19 @@ app.use(express.json());
 db.defaults({
   ingredients: [],
   menus: [],
-  recipes: []
+  recipes: [],
 }).write();
 
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Origin', '*');
   res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept',
   );
   next();
 });
 
-const entities = ["menus", "recipes", "ingredients"];
+const entities = ['menus', 'recipes', 'ingredients'];
 
 entities.forEach((entity: string) => {
   app.get(`/api/${entity}`, (req, res) => {
@@ -38,12 +38,12 @@ entities.forEach((entity: string) => {
   });
 });
 
-app.post("/api/menus", (req, res) => {
+app.post('/api/menus', (req, res) => {
   const { name, recipes, description } = req.body.menu;
 
   try {
     const menu = new Menu(name, recipes, description);
-    db.get("menus")
+    db.get('menus')
       // @ts-ignore
       .push(menu)
       .write();
@@ -53,10 +53,10 @@ app.post("/api/menus", (req, res) => {
   }
 });
 
-app.delete("/api/menus/:id", (req, res) => {
+app.delete('/api/menus/:id', (req, res) => {
   try {
     const { id: deleteId } = req.params;
-    db.get("menus")
+    db.get('menus')
       // @ts-ignore
       .filter(({ id }) => id !== deleteId)
       .write();
@@ -66,21 +66,21 @@ app.delete("/api/menus/:id", (req, res) => {
   }
 });
 
-app.post("/api/ingredients", (req, res) => {
+app.post('/api/ingredients', (req, res) => {
   const { name, description } = req.body.ingredient;
 
   try {
     if (!name) {
-      throw new Error("name is required");
+      throw new Error('name is required');
     }
 
     const id = uniqid();
     const ingredient: Ingredient = {
+      description,
       id,
       name,
-      description
     };
-    db.get("ingredients")
+    db.get('ingredients')
       // @ts-ignore
       .push(ingredient)
       .write();
@@ -90,10 +90,10 @@ app.post("/api/ingredients", (req, res) => {
   }
 });
 
-app.delete("/api/ingredients/:id", (req, res) => {
+app.delete('/api/ingredients/:id', (req, res) => {
   try {
     const { id: deleteId } = req.params;
-    db.get("ingredients")
+    db.get('ingredients')
       // @ts-ignore
       .filter(({ id }) => id !== deleteId)
       .write();
@@ -103,22 +103,22 @@ app.delete("/api/ingredients/:id", (req, res) => {
   }
 });
 
-app.post("/api/recipes", (req, res) => {
+app.post('/api/recipes', (req, res) => {
   const { name, ingredients, description } = req.body.recipe;
 
   try {
     if (!name) {
-      throw new Error("name is required");
+      throw new Error('name is required');
     }
 
     const id = uniqid();
     const ingredient: Recipe = {
+      description,
       id,
-      name,
       ingredients,
-      description
+      name,
     };
-    db.get("recipes")
+    db.get('recipes')
       // @ts-ignore
       .push(ingredient)
       .write();
@@ -128,10 +128,10 @@ app.post("/api/recipes", (req, res) => {
   }
 });
 
-app.delete("/api/recipes/:id", (req, res) => {
+app.delete('/api/recipes/:id', (req, res) => {
   try {
     const { id: deleteId } = req.params;
-    db.get("recipes")
+    db.get('recipes')
       // @ts-ignore
       .filter(({ id }) => id !== deleteId)
       .write();
