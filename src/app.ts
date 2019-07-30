@@ -55,12 +55,12 @@ app.post("/api/menus", (req, res) => {
 
 app.delete("/api/menus/:id", (req, res) => {
   try {
-    const { id: deleteId } = req.params;
+    const { id } = req.params;
     db.get("menus")
       // @ts-ignore
-      .filter(({ id }) => id !== deleteId)
+      .remove({ id })
       .write();
-    res.send({ id: deleteId });
+    res.send({ id });
   } catch (e) {
     res.status(422).send(e.toString());
   }
@@ -131,12 +131,12 @@ app.post("/api/recipes", (req, res) => {
 
 app.delete("/api/recipes/:id", (req, res) => {
   try {
-    const { id: deleteId } = req.params;
+    const { id } = req.params;
     db.get("recipes")
       // @ts-ignore
-      .filter(({ id }) => id !== deleteId)
+      .remove({ id })
       .write();
-    res.send({ id: deleteId });
+    res.send({ id });
   } catch (e) {
     res.status(422).send(e.toString());
   }
